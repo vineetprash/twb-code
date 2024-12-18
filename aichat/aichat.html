@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gemini AI Chat</title>
+    <link rel="stylesheet" href="aichat.css" />
+  </head>
+  <body>
+    <div id="chat-container">
+      <div id="messages"></div>
+      <div id="input-area">
+        <input
+          type="text"
+          id="userInput"
+          placeholder="Type your message here..."
+        />
+        <button id="submit">Send</button>
+      </div>
+    </div>
+
+    <!-- Main Script -->
+    <script type="module">
+      import { GoogleGenerativeAI } from "https://esm.sh/@google/generative-ai";
+
+      const API_KEY = "YOUR_API_KEY";
+      const genAI = new GoogleGenerativeAI(API_KEY);
+      const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
+
+      submit.addEventListener("click", async () => {
+        submit.setAttribute("disabled", "true");
+        let text = userInput.value;
+        userInput.value = "";
+        if (text === "") return;
+
+        appendMessage("user", text);
+        const response = await prompt(text);
+
+        // Create a response element and add it to messages
+        appendMessage("bot", response);
+        submit.removeAttribute("disabled");
+      });
+
+      async function prompt(text) {
+        const result = await model.generateContent(text);
+        return result.response.text();
+      }
+      function appendMessage(sender, text) {
+        const messageDiv = document.createElement("div");
+        messageDiv.classList.add("message", sender);
+        messageDiv.textContent = text;
+        messages.appendChild(messageDiv);
+      }
+    </script>
+  </body>
+</html>

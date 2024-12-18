@@ -1,0 +1,34 @@
+<!-- Minimal JS that you need to integrate Gemini API -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    Generating a poem...
+    <!-- Main Script -->
+    <script type="module">
+      // Step 1: Import via esm
+      import { GoogleGenerativeAI } from "https://esm.sh/@google/generative-ai";
+
+      // Step 2: Replace YOUR_API_KEY with your Gemini API key
+      // Go to aistudio.google.com
+      // Generate new API key and paste it here
+      // You shouldn't do this in production as the api key is now visible to every visitor
+      // Generally this code is run in a backend server
+      const API_KEY = "YOUR_API_KEY";
+
+      // Step 3: Create an instance of GoogleGenerativeAI class
+      const genAI = new GoogleGenerativeAI(API_KEY);
+
+      // Step 4: Select the model to use
+      const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
+
+      // Step 5: Prompt
+      const result = await model.generateContent("Write a poem");
+      alert(result.response.text());
+    </script>
+  </body>
+</html>
