@@ -22,7 +22,11 @@
     <!-- Main Script -->
     <script type="module">
       import { GoogleGenerativeAI } from "https://esm.sh/@google/generative-ai";
-
+      / Step 2: Replace YOUR_API_KEY with your Gemini API key
+      // Go to aistudio.google.com
+      // Generate new API key and paste it here
+      // You shouldn't do this in production as the api key is now visible to every visitor
+      // Generally this code is run in a backend server
       const API_KEY = "YOUR_API_KEY";
       const genAI = new GoogleGenerativeAI(API_KEY);
       const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
